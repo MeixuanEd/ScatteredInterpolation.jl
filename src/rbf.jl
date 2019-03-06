@@ -185,11 +185,15 @@ end
 function interpolate(rbf::Union{T, AbstractVector{T}} where T <: AbstractRadialBasisFunction,
                      points::AbstractArray{<:Real,2},
                      samples::AbstractArray{<:Number,N};
+<<<<<<< HEAD
                      metric = Euclidean(), returnRBFmatrix::Bool = false,
                      smooth::Union{S, AbstractVector{S}} = false) where {N} where {S<:Number}
 
     #hinder smooth from being set to true and interpreted as the value 1 
     @assert smooth != true "set the smoothing value as a number or vector of numbers"
+=======
+                     metric = Euclidean(), returnRBFmatrix = false)
+>>>>>>> 14ceb6cab89c15d29cbc34fe4c237d9e6a30c03d
 
     # Compute pairwise distances, apply the Radial Basis Function
     # and optional smoothing (ridge regression)
@@ -202,9 +206,17 @@ function interpolate(rbf::Union{T, AbstractVector{T}} where T <: AbstractRadialB
 
     # Create and return an interpolation object
     if returnRBFmatrix    # Return matrix A
+<<<<<<< HEAD
         return itp, A
     else
         return itp
+=======
+        return RBFInterpolant(w, points, rbf, metric), A
+    elseif returnRBFmatrix
+        return RBFInterpolant(w, points, rbf, metric)
+    else
+        error("set returnRBFmatrix to true or false")
+>>>>>>> 14ceb6cab89c15d29cbc34fe4c237d9e6a30c03d
     end
 
 end
